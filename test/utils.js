@@ -5,6 +5,7 @@ const brokenCapabilities = {
   "sauce:options": {
     name: "Broken Google Search",
     screenResolution: "1280x960",
+    //Task IV
     tags: ["brokenSauce"],
   },
 };
@@ -16,6 +17,7 @@ const workingCapabilities = {
   "sauce:options": {
     name: "Guinea-Pig Sauce",
     screenResolution: "1280x960",
+    //Task IV
     tags: ["workingSauce"],
   },
 };

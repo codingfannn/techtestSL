@@ -30,36 +30,51 @@ describe("Broken Sauce", function () {
     // will have to code around that or use the us-west-1 datacenter.
     // You can investigate the modal elements using a Live Test(https://app.saucelabs.com/live/web-testing)
 
+    //Got a German GDPR modal on google.com
+    //clicks "Ich stimme zu (meaning: I agree)" button
     await driver.findElement(By.xpath("//*[text()='Ich stimme zu']")).click();
 
+    //correction of name attribute(Previously was "Search", corrected to "q")
+    //able to write "Sauce Labs" in Google Search bar
     let search = await driver.findElement(By.name("q"));
     await search.sendKeys("Sauce Labs");
 
+    //clicks
     let button = await driver.findElement(By.name("btnK"));
     await button.click();
 
     //BONUS:
 
+    //test is able to find the correct link to click, to reach https://saucelabs.com
+    //instead of other listed links
     let page = await driver.findElement(
       By.partialLinkText("https://saucelabs.com")
     );
     await page.click();
 
-    /*let resourcePosition = await driver
-      .findElement(By.css("div[data-hover-content='Resources']"))
-      .getRect();
-    console.log(
-      await driver
-        .findElement(By.css("div[data-hover-content='Resources']"))
-        .getAttribute("innerHTML")
+    //getting "Resources" elements
+    let resource = await driver.findElements(
+      By.css("div[data-hover-content='Resources']")
     );
-    const posX = resourcePosition.x + resourcePosition.width / 2;
-    const posY = resourcePosition.y + resourcePosition.height / 2;
+
+    //getting the second "Resources" element (first one is in the hamburger menu)
+    resource = resource[1];
+
+    //some logs to see what is selected
+    console.log(await resource.getAttribute("innerHTML"));
+    console.log(await resource.getRect());
 
     const action = driver.actions();
-    await action.move(posX, posY).perform();*/
 
-    //BONUS
+    //hover to the resource element
+    await action.move({ origin: resource }).perform();
+
+    //find the "Documentation" link and click it
+    const docs = driver.findElement(By.linkText("Documentation"));
+    console.log(await docs.getAttribute("innerHTML"));
+    await docs.click();
+
+    //test status shows as "passed" instead of "complete"
     driver.executeScript(`sauce:job-result=passed`);
 
     await driver.quit();

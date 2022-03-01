@@ -44,25 +44,32 @@ describe("Working Sauce", function () {
       await driver.getTitle()
     );
 
-    // Task I
+    // Task I - test clicks the "I am a link" link
+
     /* await driver.findElement(By.id("i am a link")).click();
     await assert.strictEqual(
       "I am another page title - Sauce Labs",
       await driver.getTitle()
     );*/
+
     // Task II
+
+    //It was not obvious if the test needs to be able to only write "Sauce" in the textbox or before that it has to also clear
+    //"I have no focus" from the textbox
+
     /*await driver.findElement(By.id("i_am_a_textbox")).sendKeys("Sauce");
     await assert.strictEqual(
       "i has no focusSauce",
       await driver.findElement(By.id("i_am_a_textbox")).getAttribute("value")
     );*/
 
+    //test is able to write "Sauce" in the text box
     const textbox = await driver.findElement(By.id("i_am_a_textbox"));
     await textbox.clear();
     await textbox.sendKeys("Sauce");
     await assert.strictEqual("Sauce", await textbox.getAttribute("value"));
 
-    // Task III
+    // Task III - test adds an email to the email field
     const emailbox = await driver.findElement(By.id("fbemail"));
     await emailbox.clear();
     await emailbox.sendKeys("radvannoemi@gmail.com");
@@ -70,7 +77,7 @@ describe("Working Sauce", function () {
       "radvannoemi@gmail.com",
       await emailbox.getAttribute("value")
     );
-
+    //test adds comments to the comment field
     const commentbox = await driver.findElement(By.id("comments"));
     await commentbox.clear();
     await commentbox.sendKeys("This is a new comment");
@@ -78,7 +85,7 @@ describe("Working Sauce", function () {
       "This is a new comment",
       await commentbox.getAttribute("value")
     );
-
+    //test clicks the send button
     await driver.findElement(By.id("submit")).click();
     await assert.strictEqual(
       "Your comments: This is a new comment",
@@ -87,7 +94,7 @@ describe("Working Sauce", function () {
         .getAttribute("textContent")
     );
 
-    //BONUS
+    //BONUS - test status shows as "passed" instead of "complete"
     driver.executeScript(`sauce:job-result=passed`);
 
     await driver.quit();
