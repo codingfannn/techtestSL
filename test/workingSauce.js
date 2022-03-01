@@ -87,6 +87,7 @@ describe("Working Sauce", function () {
         .getAttribute("textContent")
     );
 
+    //BONUS
     driver.executeScript(`sauce:job-result=passed`);
 
     await driver.quit();

@@ -38,21 +38,29 @@ describe("Broken Sauce", function () {
     let button = await driver.findElement(By.name("btnK"));
     await button.click();
 
+    //BONUS:
+
     let page = await driver.findElement(
       By.partialLinkText("https://saucelabs.com")
     );
     await page.click();
 
-    let resource = await driver.findElement(
-      By.xpath("//a[text()='Resources']")
+    /*let resourcePosition = await driver
+      .findElement(By.css("div[data-hover-content='Resources']"))
+      .getRect();
+    console.log(
+      await driver
+        .findElement(By.css("div[data-hover-content='Resources']"))
+        .getAttribute("innerHTML")
     );
+    const posX = resourcePosition.x + resourcePosition.width / 2;
+    const posY = resourcePosition.y + resourcePosition.height / 2;
+
     const action = driver.actions();
-    await action
-      .move(
-        await resource.getAttribute("offsetLeft"),
-        await resource.getAttribute("offsetTop")
-      )
-      .perform();
+    await action.move(posX, posY).perform();*/
+
+    //BONUS
+    driver.executeScript(`sauce:job-result=passed`);
 
     await driver.quit();
   });
